@@ -17,9 +17,12 @@
   06   long comment
   07   ????
   08   long comment }
-  09   { i = i +  ( i*j ) + 100; writeln( i );
-  10   for i := 1 to 10
+  09   i = i +  ( i*j ) + 100; writeln( i );
+  10   { for i := 1 to 10
   11   if odd (i)
   12   then a[i] := 'a' //PROSTO PROVERKA
   13   else a[i] := '';
   14   writeln( a[i] );
+  15   end. 
+**06** ^ошибка код: 86
+****** 86: комментарий не закрыт

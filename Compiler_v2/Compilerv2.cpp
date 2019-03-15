@@ -233,8 +233,6 @@ int nmb_int; //значение целой константы
 float nmb_float; //значение вещественной константы
 char one_symbol; //значение символьной константы 
 
-set <string> idents;
-
 //void CreateErrorTable()
 //{
 //	string tempStr;
@@ -283,25 +281,6 @@ void addErrTable(unsigned int erCode, textPosition erPos)
 	ep.codeError = erCode;
 	errorList.push_back(ep);
 }
-
-//int convertToNumber(char ch, int max)
-//{
-//	char digit;
-//	int nmb = 0;
-//	/*int maxint = 32767;
-//	int maxreal = 3.4 * 10 ^ 38;*/
-//	while (ch >= '0' && ch <= '9')
-//	{
-//		digit = ch - '0';
-//		if (nmb < max / 10 || (nmb == max / 10 && digit <= max % 10))
-//			nmb = 10 * nmb + digit;
-//		else
-//			return 0;
-//		ch = nextch();
-//	}
-//	//positionNow.charNum--;
-//	return nmb;
-//}
 
 char nextch() {
 	char ch = NULL;
@@ -452,7 +431,7 @@ void nextsym()
 						ch = nextch();
 					}
 					printCodeSym = false;
-					if (progFile.eof()) { addErrTable(86, tokenComm); }
+					if (progFile.eof()) { addErrTable(86, tokenComm); ch = nextch(); }
 			}
 			else
 				symbol = flpar;

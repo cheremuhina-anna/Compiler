@@ -7,8 +7,8 @@ long comment
 long comment
 ????
 long comment }
-{ i = i +  ( i*j ) + 100; writeln( i );
-for i := 1 to 10
+i = i +  ( i*j ) + 100; writeln( i );
+{ for i := 1 to 10
 if odd (i)
 then a[i] := 'a' //PROSTO PROVERKA
 else a[i] := '';
