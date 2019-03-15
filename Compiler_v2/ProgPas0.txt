@@ -1,0 +1,10 @@
+program sumAB;
+var a,b,sum,integer;
+begin
+readln(a);
+readln(b);
+if a<=b then 
+ sum=a+b;
+writeln;
+readln;
+end

@@ -1,0 +1,16 @@
+program example (output);
+var i, j, temp: real;
+    mas : array [1..10] of char;
+begin i := 1; j := 3276900000000000000000000000000000000000000000000000000000000000000000000000000; temp := 534123423420000000000000000000000000000000000000000000000000000.89;
+?  $     & { long comment
+long comment
+long comment
+????
+long comment }
+{ i = i +  ( i*j ) + 100; writeln( i );
+for i := 1 to 10
+if odd (i)
+then a[i] := 'a' //PROSTO PROVERKA
+else a[i] := '';
+writeln( a[i] );
+end. 
