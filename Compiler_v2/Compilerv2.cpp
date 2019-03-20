@@ -571,6 +571,168 @@ void nextsym()
 	if (printCodeSym) codeOfSymbol << symbol << " ";
 }
 
+void idknextsym()
+{
+	nextsym();
+}
+
+void accept(unsigned symbolexpected
+/* код ожидаемого символа */)
+{
+	cout << "Waiting: " << symbolexpected << ", Symbol: " << symbol << endl;
+	if (symbol == symbolexpected)
+	{
+		nextsym();
+	}
+	else { addErrTable(symbolexpected, token); idknextsym(); }
+}
+void block()
+/* анализ конструкции <блок> */
+{
+	labelpart();
+	constpart();
+	typepart();
+	varpart();
+	procfuncpart();
+	statementpart();
+}
+void programme()
+/* анализ конструкции <программа> */
+{
+	accept(programsy);
+	accept(ident);
+	if (symbol == leftpar)
+	{
+		accept(leftpar);
+		accept(ident);
+		while (symbol == comma)
+		{
+			accept(comma);
+			accept(ident);
+		}
+		accept(rightpar);
+	}
+	accept(semicolon);
+	block(); /* анализ конструкции <блок> */
+	accept(point);
+}
+
+void varpart()
+/* анализ конструкции <раздел переменных> */
+{
+	if (symbol == varsy)
+	{
+		accept(varsy);
+		do
+		{
+			vardeclaration();
+			accept(semicolon);
+		} while (symbol == ident);
+	}
+}
+
+void vardeclaration()
+/* анализ конструкции
+<описание однотипных переменных> */
+{
+	accept(ident);
+	while (symbol == comma)
+	{
+		accept(comma);
+		accept(ident);
+	}
+	accept(colon);
+	type();
+}
+void type()
+/* тип */
+{
+	switch (symbol)
+	{
+	case leftpar: //перечисляемый
+		simpletype();
+		break;
+	case intc:	//ограниченный
+		simpletype();
+		break;
+	case charc:	//ограниченный
+		simpletype();
+		break;
+	case ident: //простой
+		simpletype();
+		break;
+	default:
+		addErrTable(10, token);
+		idknextsym();
+	}
+}
+
+void simpletype()
+{
+	switch (symbol)
+	{
+	case leftpar: //перечисляемый
+		numtype();
+		break;
+	case intc:	//ограниченный
+		accept(intc);
+		limtype(1);
+		break;
+	case charc:	//ограниченный
+		accept(charc);
+		limtype(0);
+		break;
+	case ident: //простой
+		accept(ident);
+		break;
+	}
+}
+
+void numtype()
+{
+	accept(leftpar);
+	accept(ident);
+	while (symbol == comma)
+	{
+		accept(comma);
+		accept(ident);
+	}
+	accept(rightpar);
+}
+
+void limtype(bool flag)
+{
+	accept(twopoints);
+	if (flag)
+		accept(intc);
+	else
+		accept(charc);
+}
+
+void variable()
+/* анализ конструкции <переменная> */
+{
+	accept(ident);
+	while (symbol == lbracket || symbol == point || symbol == arrow)
+		switch (symbol)
+		{
+		case lbracket:
+			accept(lbracket); expression();
+			while (symbol == comma)
+			{
+				accept(comma); expression();
+			}
+			accept(rbracket);
+			break;
+		case point:
+			accept(point); accept(ident);
+			break;
+		case arrow:
+			accept(arrow);
+			break;
+		}
+}
+
 void main()
 {
 	getline(progFile, line, '\n');
